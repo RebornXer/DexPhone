@@ -5214,7 +5214,7 @@ local function main()
 				local releaseEvent
 				local mouseEvent
 				releaseEvent = user.InputEnded:Connect(function(input)
-					if input.UserInputType ~= Enum.UserInputType.MouseButton1Click then return end
+					if input.UserInputType ~= Enum.UserInputType.MouseButton1 then return end
 					releaseEvent:Disconnect()
 					if mouseEvent then mouseEvent:Disconnect() end
 					if checkMouseInGui(scrollThumb) then scrollThumb.BackgroundTransparency = 0.2 else scrollThumb.BackgroundTransparency = 0 scrollThumb.BackgroundColor3 = self.ThumbColor end
@@ -5243,7 +5243,7 @@ local function main()
 				if input.UserInputType == Enum.UserInputType.MouseMovement and not thumbPress then scrollThumb.BackgroundTransparency = 0 scrollThumb.BackgroundColor3 = self.ThumbColor end
 			end)
 			scrollThumbFrame.InputBegan:Connect(function(input)
-				if input.UserInputType ~= Enum.UserInputType.MouseButton1Click or checkMouseInGui(scrollThumb) then return end
+				if input.UserInputType ~= Enum.UserInputType.MouseButton1 or checkMouseInGui(scrollThumb) then return end
 
 				local dir = self.Horizontal and "X" or "Y"
 				local scrollDir = 0
@@ -5278,7 +5278,7 @@ local function main()
 				end
 			end)
 
-			newFrame.Mousebutton1:Connect(function()
+			newFrame.MouseWheelForward:Connect(function()
 				self:ScrollTo(self.Index - self.WheelIncrement)
 			end)
 
@@ -9908,9 +9908,9 @@ local function main()
 			b.MouseButton1Down:Connect(function() obj:Trigger("Down",1) end)
 			b.MouseButton1Up:Connect(function() obj:Trigger("Up",1) end)
 
-			b.MouseButton1Click:Connect(function() obj:Trigger("Click",1) end)
-			b.MouseButton1Down:Connect(function() obj:Trigger("Down",1) end)
-			b.MouseButton1Up:Connect(function() obj:Trigger("Up",1) end)
+			b.MouseButton2Click:Connect(function() obj:Trigger("Click",2) end)
+			b.MouseButton2Down:Connect(function() obj:Trigger("Down",2) end)
+			b.MouseButton2Up:Connect(function() obj:Trigger("Up",2) end)
 
 			return obj
 		end
@@ -10074,7 +10074,7 @@ local function main()
 
 			local cons = {}
 			cons[1] = item.MouseButton1Down:Connect(function() self:Trigger(item,1) end)
-			cons[2] = item.MouseButton1Down:Connect(function() self:Trigger(item,2) end)
+			cons[2] = item.MouseButton2Down:Connect(function() self:Trigger(item,2) end)
 
 			self.ItemCons[item] = cons
 			self.Items[#self.Items+1] = item
