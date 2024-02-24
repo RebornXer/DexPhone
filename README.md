@@ -529,6 +529,7 @@ local function main()
 				Explorer.Dragging = false
 
 				for i = 1,#listEntries do
+					if Lib.CheckMouseInGui(listEntries[i]) then
 						local node = tree[i + Explorer.Index]
 						if node then
 							if selection.Map[node] then return end
@@ -543,7 +544,7 @@ local function main()
 						break
 					end
 				end
-			
+			end
 		end)
 	end
 
@@ -5147,15 +5148,15 @@ local function main()
 			--local thumbColor = Color3.new(120/255,120/255,120/255)
 			--local thumbSelectColor = Color3.new(140/255,140/255,140/255)
 			button1.InputBegan:Connect(function(input)
-				if input.UserInputType == Enum.UserInputType.MouseButton1Up and not buttonPress and self:CanScrollUp() then button1.BackgroundTransparency = 0.8 end
-				if input.UserInputType ~= Enum.UserInputType.MouseButton1Up or not self:CanScrollUp() then return end
+				if input.UserInputType == Enum.UserInputType.MouseMovement and not buttonPress and self:CanScrollUp() then button1.BackgroundTransparency = 0.8 end
+				if input.UserInputType ~= Enum.UserInputType.MouseButton1 or not self:CanScrollUp() then return end
 				buttonPress = true
 				button1.BackgroundTransparency = 0.5
 				if self:CanScrollUp() then self:ScrollUp() self.Scrolled:Fire() end
 				local buttonTick = tick()
 				local releaseEvent
 				releaseEvent = user.InputEnded:Connect(function(input)
-					if input.UserInputType ~= Enum.UserInputType.MouseButton1Down then return end
+					if input.UserInputType ~= Enum.UserInputType.MouseButton1 then return end
 					releaseEvent:Disconnect()
 					if checkMouseInGui(button1) and self:CanScrollUp() then button1.BackgroundTransparency = 0.8 else button1.BackgroundTransparency = 1 end
 					buttonPress = false
@@ -5169,18 +5170,18 @@ local function main()
 				end
 			end)
 			button1.InputEnded:Connect(function(input)
-				if input.UserInputType == Enum.UserInputType.MouseButton1Up and not buttonPress then button1.BackgroundTransparency = 1 end
+				if input.UserInputType == Enum.UserInputType.MouseMovement and not buttonPress then button1.BackgroundTransparency = 1 end
 			end)
 			button2.InputBegan:Connect(function(input)
-				if input.UserInputType == Enum.UserInputType.MouseButton1Up and not buttonPress and self:CanScrollDown() then button2.BackgroundTransparency = 0.8 end
-				if input.UserInputType ~= Enum.UserInputType.MouseButton1Up or not self:CanScrollDown() then return end
+				if input.UserInputType == Enum.UserInputType.MouseMovement and not buttonPress and self:CanScrollDown() then button2.BackgroundTransparency = 0.8 end
+				if input.UserInputType ~= Enum.UserInputType.MouseButton1 or not self:CanScrollDown() then return end
 				buttonPress = true
 				button2.BackgroundTransparency = 0.5
 				if self:CanScrollDown() then self:ScrollDown() self.Scrolled:Fire() end
 				local buttonTick = tick()
 				local releaseEvent
 				releaseEvent = user.InputEnded:Connect(function(input)
-					if input.UserInputType ~= Enum.UserInputType.MouseButton1Down then return end
+					if input.UserInputType ~= Enum.UserInputType.MouseButton1 then return end
 					releaseEvent:Disconnect()
 					if checkMouseInGui(button2) and self:CanScrollDown() then button2.BackgroundTransparency = 0.8 else button2.BackgroundTransparency = 1 end
 					buttonPress = false
@@ -5194,12 +5195,12 @@ local function main()
 				end
 			end)
 			button2.InputEnded:Connect(function(input)
-				if input.UserInputType == Enum.UserInputType.MouseButton1Up and not buttonPress then button2.BackgroundTransparency = 1 end
+				if input.UserInputType == Enum.UserInputType.MouseMovement and not buttonPress then button2.BackgroundTransparency = 1 end
 			end)
 
 			scrollThumb.InputBegan:Connect(function(input)
 				if input.UserInputType == Enum.UserInputType.MouseMovement and not thumbPress then scrollThumb.BackgroundTransparency = 0.2 scrollThumb.BackgroundColor3 = self.ThumbSelectColor end
-				if input.UserInputType ~= Enum.UserInputType.MouseButton1Up then return end
+				if input.UserInputType ~= Enum.UserInputType.MouseButton1 then return end
 
 				local dir = self.Horizontal and "X" or "Y"
 				local lastThumbPos = nil
@@ -5213,7 +5214,7 @@ local function main()
 				local releaseEvent
 				local mouseEvent
 				releaseEvent = user.InputEnded:Connect(function(input)
-					if input.UserInputType ~= Enum.UserInputType.MouseButton1Down then return end
+					if input.UserInputType ~= Enum.UserInputType.MouseButton1 then return end
 					releaseEvent:Disconnect()
 					if mouseEvent then mouseEvent:Disconnect() end
 					if checkMouseInGui(scrollThumb) then scrollThumb.BackgroundTransparency = 0.2 else scrollThumb.BackgroundTransparency = 0 scrollThumb.BackgroundColor3 = self.ThumbColor end
@@ -5222,7 +5223,7 @@ local function main()
 				self:Update()
 
 				mouseEvent = user.InputChanged:Connect(function(input)
-					if input.UserInputType == Enum.UserInputType.MouseButton1Up and thumbPress and releaseEvent.Connected then
+					if input.UserInputType == Enum.UserInputType.MouseMovement and thumbPress and releaseEvent.Connected then
 						local thumbFrameSize = scrollThumbFrame.AbsoluteSize[dir]-scrollThumb.AbsoluteSize[dir]
 						local pos = mouse[dir] - scrollThumbFrame.AbsolutePosition[dir] - mouseOffset
 						if pos > thumbFrameSize then
@@ -5239,10 +5240,10 @@ local function main()
 				end)
 			end)
 			scrollThumb.InputEnded:Connect(function(input)
-				if input.UserInputType == Enum.UserInputType.MouseButton1Down and not thumbPress then scrollThumb.BackgroundTransparency = 0 scrollThumb.BackgroundColor3 = self.ThumbColor end
+				if input.UserInputType == Enum.UserInputType.MouseMovement and not thumbPress then scrollThumb.BackgroundTransparency = 0 scrollThumb.BackgroundColor3 = self.ThumbColor end
 			end)
 			scrollThumbFrame.InputBegan:Connect(function(input)
-				if input.UserInputType ~= Enum.UserInputType.MouseButton1Up or checkMouseInGui(scrollThumb) then return end
+				if input.UserInputType ~= Enum.UserInputType.MouseButton1 or checkMouseInGui(scrollThumb) then return end
 
 				local dir = self.Horizontal and "X" or "Y"
 				local scrollDir = 0
@@ -11007,11 +11008,7 @@ Main = (function()
 				end)
 			else if cptsOnMouseClick ~= nil then cptsOnMouseClick:Disconnect() cptsOnMouseClick = nil end end
 		end})
-		
-		Lib.ShowGui(gui)
-	end
-	
-Main.CreateApp({Name = "Copy Path", IconMap = Main.LargeIcons, Icon = 6, OnClick = function(callback)
+		Main.CreateApp({Name = "Copy Path", IconMap = Main.LargeIcons, Icon = 6, OnClick = function(callback)
 local sList = selection.List
 			if #sList == 1 then
 				env.setclipboard(clth(Explorer.GetInstancePath(sList[1].Obj)))
@@ -11027,9 +11024,11 @@ local sList = selection.List
 				end
 				resList[count] = "}"
 				env.setclipboard(table.concat(resList,"\n"))
-		
+			end
 end)
-
+		Lib.ShowGui(gui)
+	end
+	
 	Main.SetupFilesystem = function()
 		if not env.writefile or not env.makefolder then return end
 		local writefile, makefolder = env.writefile, env.makefolder
