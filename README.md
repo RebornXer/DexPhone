@@ -5214,7 +5214,7 @@ local function main()
 				local releaseEvent
 				local mouseEvent
 				releaseEvent = user.InputEnded:Connect(function(input)
-					if input.UserInputType ~= Enum.UserInputType.MouseButton1 then return end
+					if input.UserInputType ~= Enum.UserInputType.MouseButton1Click then return end
 					releaseEvent:Disconnect()
 					if mouseEvent then mouseEvent:Disconnect() end
 					if checkMouseInGui(scrollThumb) then scrollThumb.BackgroundTransparency = 0.2 else scrollThumb.BackgroundTransparency = 0 scrollThumb.BackgroundColor3 = self.ThumbColor end
@@ -5243,7 +5243,7 @@ local function main()
 				if input.UserInputType == Enum.UserInputType.MouseMovement and not thumbPress then scrollThumb.BackgroundTransparency = 0 scrollThumb.BackgroundColor3 = self.ThumbColor end
 			end)
 			scrollThumbFrame.InputBegan:Connect(function(input)
-				if input.UserInputType ~= Enum.UserInputType.MouseButton1 or checkMouseInGui(scrollThumb) then return end
+				if input.UserInputType ~= Enum.UserInputType.MouseButton1Click or checkMouseInGui(scrollThumb) then return end
 
 				local dir = self.Horizontal and "X" or "Y"
 				local scrollDir = 0
@@ -5278,7 +5278,7 @@ local function main()
 				end
 			end)
 
-			newFrame.MouseWheelForward:Connect(function()
+			newFrame.Mousebutton1:Connect(function()
 				self:ScrollTo(self.Index - self.WheelIncrement)
 			end)
 
