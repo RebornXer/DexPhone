@@ -613,7 +613,7 @@ local function main()
 			end
 		end)
 
-		newEntry.MouseButton2Down:Connect(function()
+		newEntry.MouseButton1Down:Connect(function()
 
 		end)
 
@@ -5706,7 +5706,7 @@ local function main()
 				end
 			end)
 
-			guiTopBar.Minimize.MouseButton2Click:Connect(function()
+			guiTopBar.Minimize.MouseButton1Click:Connect(function()
 				if self.Closed then return end
 				if not self.Aligned then
 					self:SetMinimized(nil,2)
