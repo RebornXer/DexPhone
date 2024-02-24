@@ -10993,21 +10993,6 @@ Main = (function()
 		
 		Main.CreateApp({Name = "Script Viewer", IconMap = Main.LargeIcons, Icon = "Script_Viewer", Window = ScriptViewer.Window})
 
-		local cptsOnMouseClick = nil
-		Main.CreateApp({Name = "Click part to select", IconMap = Main.LargeIcons, Icon = 6, OnClick = function(callback)
-			if callback then
-				local mouse = Main.Mouse
-				cptsOnMouseClick = mouse.Button1Down:Connect(function()
-					pcall(function()
-						local object = mouse.Target
-						if nodes[object] then
-							selection:Set(nodes[object])
-							Explorer.ViewNode(nodes[object])
-						end
-					end)
-				end)
-			else if cptsOnMouseClick ~= nil then cptsOnMouseClick:Disconnect() cptsOnMouseClick = nil end end
-		end})
 		Main.CreateApp({Name = "Copy Path", IconMap = Main.LargeIcons, Icon = 6, OnClick = function(callback)
 local sList = selection.List
 			if #sList == 1 then
@@ -11026,6 +11011,22 @@ local sList = selection.List
 				env.setclipboard(table.concat(resList,"\n"))
 			end
 end)
+
+		local cptsOnMouseClick = nil
+		Main.CreateApp({Name = "Click part to select", IconMap = Main.LargeIcons, Icon = 6, OnClick = function(callback)
+			if callback then
+				local mouse = Main.Mouse
+				cptsOnMouseClick = mouse.Button1Down:Connect(function()
+					pcall(function()
+						local object = mouse.Target
+						if nodes[object] then
+							selection:Set(nodes[object])
+							Explorer.ViewNode(nodes[object])
+						end
+					end)
+				end)
+			else if cptsOnMouseClick ~= nil then cptsOnMouseClick:Disconnect() cptsOnMouseClick = nil end end
+		end})
 		Lib.ShowGui(gui)
 	end
 	
