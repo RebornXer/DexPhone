@@ -11027,7 +11027,7 @@ local sList = selection.List
 				end
 				resList[count] = "}"
 				env.setclipboard(table.concat(resList,"\n"))
-			end
+		
 end)
 
 	Main.SetupFilesystem = function()
