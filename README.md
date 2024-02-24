@@ -847,9 +847,7 @@ local function main()
 		end
 	end
 
-newEntry.RowButton.MouseButton1Click:Connect(function()
-    Explorer.ShowRightClick()
-end)
+
 
 	Explorer.ShowRightClick = function()
 		local context = Explorer.RightClickContext
