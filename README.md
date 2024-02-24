@@ -5706,7 +5706,7 @@ local function main()
 				end
 			end)
 
-			guiTopBar.Minimize.MouseButton2Click:Connect(function()
+			guiTopBar.Minimize.MouseButton1Click:Connect(function()
 				if self.Closed then return end
 				if not self.Aligned then
 					self:SetMinimized(nil,2)
@@ -9908,9 +9908,9 @@ local function main()
 			b.MouseButton1Down:Connect(function() obj:Trigger("Down",1) end)
 			b.MouseButton1Up:Connect(function() obj:Trigger("Up",1) end)
 
-			b.MouseButton2Click:Connect(function() obj:Trigger("Click",2) end)
-			b.MouseButton2Down:Connect(function() obj:Trigger("Down",2) end)
-			b.MouseButton2Up:Connect(function() obj:Trigger("Up",2) end)
+			b.MouseButton1Click:Connect(function() obj:Trigger("Click",1) end)
+			b.MouseButton1Down:Connect(function() obj:Trigger("Down",1) end)
+			b.MouseButton1Up:Connect(function() obj:Trigger("Up",1) end)
 
 			return obj
 		end
@@ -10074,7 +10074,7 @@ local function main()
 
 			local cons = {}
 			cons[1] = item.MouseButton1Down:Connect(function() self:Trigger(item,1) end)
-			cons[2] = item.MouseButton2Down:Connect(function() self:Trigger(item,2) end)
+			cons[2] = item.MouseButton1Down:Connect(function() self:Trigger(item,2) end)
 
 			self.ItemCons[item] = cons
 			self.Items[#self.Items+1] = item
