@@ -11008,7 +11008,24 @@ Main = (function()
 				end)
 			else if cptsOnMouseClick ~= nil then cptsOnMouseClick:Disconnect() cptsOnMouseClick = nil end end
 		end})
-		
+		Main.CreateApp({Name = "Copy Path", IconMap = Main.LargeIcons, Icon = 6, OnClick = function(callback)
+local sList = selection.List
+			if #sList == 1 then
+				env.setclipboard(clth(Explorer.GetInstancePath(sList[1].Obj)))
+			elseif #sList > 1 then
+				local resList = {"{"}
+				local count = 2
+				for i = 1,#sList do
+					local path = "\t"..clth(Explorer.GetInstancePath(sList[i].Obj))..","
+					if #path > 0 then
+						resList[count] = path
+						count = count+1
+					end
+				end
+				resList[count] = "}"
+				env.setclipboard(table.concat(resList,"\n"))
+			end
+end)
 		Lib.ShowGui(gui)
 	end
 	
