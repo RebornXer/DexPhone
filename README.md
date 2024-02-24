@@ -5277,11 +5277,11 @@ local function main()
 				end
 			end)
 
-			newFrame.MouseButton1:Connect(function()
+			newFrame.MouseWheelForward:Connect(function()
 				self:ScrollTo(self.Index - self.WheelIncrement)
 			end)
 
-			newFrame.MouseButton1:Connect(function()
+			newFrame.MouseWheelBackward:Connect(function()
 				self:ScrollTo(self.Index + self.WheelIncrement)
 			end)
 
@@ -11011,6 +11011,25 @@ Main = (function()
 		Lib.ShowGui(gui)
 	end
 	
+Main.CreateApp({Name = "Copy Path", IconMap = Main.LargeIcons, Icon = 6, OnClick = function(callback)
+local sList = selection.List
+			if #sList == 1 then
+				env.setclipboard(clth(Explorer.GetInstancePath(sList[1].Obj)))
+			elseif #sList > 1 then
+				local resList = {"{"}
+				local count = 2
+				for i = 1,#sList do
+					local path = "\t"..clth(Explorer.GetInstancePath(sList[i].Obj))..","
+					if #path > 0 then
+						resList[count] = path
+						count = count+1
+					end
+				end
+				resList[count] = "}"
+				env.setclipboard(table.concat(resList,"\n"))
+			end
+end)
+
 	Main.SetupFilesystem = function()
 		if not env.writefile or not env.makefolder then return end
 		local writefile, makefolder = env.writefile, env.makefolder
