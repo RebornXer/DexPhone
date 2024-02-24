@@ -5277,11 +5277,11 @@ local function main()
 				end
 			end)
 
-			newFrame.MouseButton1Up:Connect(function()
+			newFrame.MouseButton1:Connect(function()
 				self:ScrollTo(self.Index - self.WheelIncrement)
 			end)
 
-			newFrame.MouseButton1Down:Connect(function()
+			newFrame.MouseButton1:Connect(function()
 				self:ScrollTo(self.Index + self.WheelIncrement)
 			end)
 
