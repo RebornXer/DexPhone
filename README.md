@@ -6599,14 +6599,16 @@ local function main()
 						if item.OnClick then
 							newEntry.MouseButton1Click:Connect(function()
 								item.OnClick(item.Name)
+print("Click [Left]")
 								if not item.NoHide then
 									self:Hide()
 								end
 							end)
 						end
 
-						if item.OnRightClick then
-							newEntry.MouseButton2Click:Connect(function()
+						is item.OnRightClick then
+							newEntry.MouseButton1Click:Connect(function()
+print("Click [Right]")
 								item.OnRightClick(item.Name)
 								if not item.NoHide then
 									self:Hide()
