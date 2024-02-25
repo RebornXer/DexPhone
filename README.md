@@ -847,8 +847,6 @@ local function main()
 		end
 	end
 
-
-
 	Explorer.ShowRightClick = function()
 		local context = Explorer.RightClickContext
 		context:Clear()
@@ -917,8 +915,6 @@ local function main()
 		Explorer.LastRightClickX, Explorer.LastRightClickY = Main.Mouse.X, Main.Mouse.Y
 		context:Show()
 	end
-
-
 
 	Explorer.InitRightClick = function()
 		local context = Lib.ContextMenu.new()
