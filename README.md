@@ -6595,7 +6595,7 @@ local function main()
 						end
 					end
 
-					if not item.Disabled then
+					if item.Disabled then
 						if item.OnClick then
 							newEntry.MouseButton1Click:Connect(function()
 								item.OnClick(item.Name)
@@ -6606,9 +6606,9 @@ print("Click [Left]")
 							end)
 						end
 
-						is item.OnRightClick then
+						is not item.OnRightClick then
 							newEntry.MouseButton1Click:Connect(function()
-print("Click [Right]")
+print("Click [right]")
 								item.OnRightClick(item.Name)
 								if not item.NoHide then
 									self:Hide()
