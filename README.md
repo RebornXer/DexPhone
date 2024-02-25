@@ -6595,20 +6595,18 @@ local function main()
 						end
 					end
 
-					if item.Disabled then
+					if not item.Disabled then
 						if item.OnClick then
 							newEntry.MouseButton1Click:Connect(function()
 								item.OnClick(item.Name)
-print("Click [Left]")
 								if not item.NoHide then
 									self:Hide()
 								end
 							end)
 						end
 
-						is not item.OnRightClick then
+						if item.OnRightClick then
 							newEntry.MouseButton1Click:Connect(function()
-print("Click [right]")
 								item.OnRightClick(item.Name)
 								if not item.NoHide then
 									self:Hide()
@@ -8878,7 +8876,7 @@ print("Click [right]")
 					updateColor()
 				end)
 
-				newColor.MouseButton2Click:Connect(function()
+				newColor.MouseButton1Click:Connect(function()
 					customColors[i] = chosenColor
 					newColor.BackgroundColor3 = chosenColor
 				end)
@@ -9910,9 +9908,9 @@ print("Click [right]")
 			b.MouseButton1Down:Connect(function() obj:Trigger("Down",1) end)
 			b.MouseButton1Up:Connect(function() obj:Trigger("Up",1) end)
 
-			b.MouseButton2Click:Connect(function() obj:Trigger("Click",2) end)
-			b.MouseButton2Down:Connect(function() obj:Trigger("Down",2) end)
-			b.MouseButton2Up:Connect(function() obj:Trigger("Up",2) end)
+			b.MouseButton1Click:Connect(function() obj:Trigger("Click",2) end)
+			b.MouseButton1Down:Connect(function() obj:Trigger("Down",2) end)
+			b.MouseButton1Up:Connect(function() obj:Trigger("Up",2) end)
 
 			return obj
 		end
@@ -10995,6 +10993,25 @@ Main = (function()
 		
 		Main.CreateApp({Name = "Script Viewer", IconMap = Main.LargeIcons, Icon = "Script_Viewer", Window = ScriptViewer.Window})
 
+		Main.CreateApp({Name = "Copy Path", IconMap = Main.LargeIcons, Icon = 6, OnClick = function(callback)
+local sList = selection.List
+			if #sList == 1 then
+				env.setclipboard(clth(Explorer.GetInstancePath(sList[1].Obj)))
+			elseif #sList > 1 then
+				local resList = {"{"}
+				local count = 2
+				for i = 1,#sList do
+					local path = "\t"..clth(Explorer.GetInstancePath(sList[i].Obj))..","
+					if #path > 0 then
+						resList[count] = path
+						count = count+1
+					end
+				end
+				resList[count] = "}"
+				env.setclipboard(table.concat(resList,"\n"))
+			end
+end)
+
 		local cptsOnMouseClick = nil
 		Main.CreateApp({Name = "Click part to select", IconMap = Main.LargeIcons, Icon = 6, OnClick = function(callback)
 			if callback then
@@ -11010,7 +11027,6 @@ Main = (function()
 				end)
 			else if cptsOnMouseClick ~= nil then cptsOnMouseClick:Disconnect() cptsOnMouseClick = nil end end
 		end})
-		
 		Lib.ShowGui(gui)
 	end
 	
